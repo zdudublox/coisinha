@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 0; padding: 0; overflow: hidden; background-color: #000; }
+        header { background-color: #333; color: white; padding: 20px; font-size: 24px; position: relative; z-index: 2; }
+        nav { background: #444; padding: 10px; position: relative; z-index: 2; }
+        nav a { color: white; margin: 0 15px; text-decoration: none; font-size: 18px; }
+        nav a:hover { text-decoration: underline; }
+        .container { max-width: 500px; margin: 50px auto; background: white; padding: 20px; box-shadow: 0 0 10px rgba(0,0,0,0.1); border-radius: 10px; position: relative; z-index: 2; }
+        form { display: flex; flex-direction: column; gap: 15px; }
+        input, textarea, button { padding: 10px; font-size: 16px; border-radius: 5px; border: 1px solid #ccc; }
+        textarea { min-height: 100px; resize: vertical; }
+        button { background-color: #007bff; color: white; border: none; cursor: pointer; transition: background-color 0.3s; }
+        button:hover { background-color: #0056b3; }
+        footer { background: #333; color: white; padding: 10px; position: relative; bottom: 0; width: 100%; margin-top: 20px; z-index: 2; }
+        canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+        .whatsapp-link { display: inline-block; margin-top: 10px; }
+        .whatsapp-link img { width: 30px; height: 30px; vertical-align: middle; }
+    </style>
+</head>
+<body>
+    <canvas id="background"></canvas>
+    <header>Contato</header>
+    <nav>
+        <a href="index.html">Início</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="contato.html">Contato</a>
+    </nav>
+    <div class="container">
+        <h2>Entre em contato</h2>
+
+        <!-- Formulário com Formsubmit.io -->
+        <form action="https://formsubmit.io/send/zdudublox@gmail.com" method="POST">
+            <input type="hidden" name="_redirect" value="https://dudis-portifolio.neocities.org/obrigado">
+            <input type="hidden" name="_captcha" value="false">
+
+            <input type="text" name="name" placeholder="Seu Nome" required>
+            <input type="email" name="email" placeholder="Seu Email" required>
+            <textarea name="message" placeholder="Sua mensagem" required></textarea>
+            <button type="submit">Enviar</button>
+        </form>
+
+        <p>Caso precise de atendimento imediato:</p>
+        <p>WhatsApp: 
+            <a class="whatsapp-link" href="https://wa.me/5544999412311" target="_blank">
+                <img src="zap.png" alt="WhatsApp">
+            </a>
+        </p>
+    </div>
+    <footer>
+        <p>© 2025 Dudu | Desenvolvendo com HTML</p>
+    </footer>
+
+    <script>
+        // Efeito de partículas no fundo
+        const canvas = document.getElementById('background');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particlesArray = [];
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 5 + 1;
+                this.speedX = (Math.random() * 2) - 1;
+                this.speedY = (Math.random() * 2) - 1;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function init() {
+            particlesArray = [];
+            for (let i = 0; i < 100; i++) {
+                particlesArray.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let particle of particlesArray) {
+                particle.update();
+                particle.draw();
+            }
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+    </script>
+</body>
+</html>
